@@ -29,23 +29,23 @@ router.post('/', [
     const errors = validationResult(req);
     const messagesFilePath = path.join(appRoot.path, 'messages');
     
-    // Check if there are errors and write to file
-    if (errors.errors.length === 0) {
-      fs.writeFile(`${messagesFilePath}/${handleDateFormat}.txt`, JSON.stringify(req.body), (err) => {
-        if(err) console.log(err);
-    
-        console.log('Mesage saved!');
-      })
-    }
-
     res.render('contact', {
       title: 'Contact',
       data: req.body,
       errors: errors.mapped()
     });
 
+    // Sanitise data
     const data = matchedData(req);
-    console.log('Sanitised:', data);
+    // Check if there are errors and write sanitised to file
+    if (errors.errors.length === 0) {
+      fs.writeFile(`${messagesFilePath}/${handleDateFormat}.txt`, JSON.stringify(data), (err) => {
+        if(err) console.log(err);
+    
+        console.log('Mesage saved!');
+      })
+    }
+
 });
 
 module.exports = router;
