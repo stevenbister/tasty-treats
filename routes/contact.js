@@ -4,7 +4,7 @@ const path = require('path');
 const fs = require('fs');
 const appRoot = require('app-root-path');
 const {check, validationResult, matchedData} = require('express-validator');
-const date = require('../handlers/handleDateFormat');
+const handleDateFormat = require('../handlers/handleDateFormat');
 
 // GET contact form
 router.get('/', (req, res) => {
@@ -18,27 +18,26 @@ router.get('/', (req, res) => {
 // POST to contact form
 router.post('/', [
   // Validate form
-  check('name').isLength({min: 1}).withMessage('Name is required')
-], (req, res) => {
-  const errors = validationResult(req);
+    check('name').isLength({min: 1}).withMessage('Name is required')
+  ], 
+  (req, res) => {
+    const errors = validationResult(req);
+    const messagesFilePath = path.join(appRoot.path, 'messages');
+    
+    // Check if there are errors and write to file
+    if (errors.errors.length === 0) {
+      fs.writeFile(`${messagesFilePath}/${handleDateFormat}.txt`, JSON.stringify(req.body), (err) => {
+        if(err) console.log(err);
+    
+        console.log('Mesage saved!');
+      })
+    }
 
-  // Write to file
-  // TODO: Formate date to nice format
-  const messages = path.join(appRoot.path, 'messages');
-
-  if (errors.errors.length === 0) {
-    fs.writeFile(`${messages}/${date}.txt`, JSON.stringify(req.body), (err) => {
-      if(err) console.log(err);
-  
-      console.log('Mesage saved!');
-    })
-  }
-
-  res.render('contact', {
-    title: 'Contact',
-    data: req.body,
-    errors: errors.mapped()
-  });
+    res.render('contact', {
+      title: 'Contact',
+      data: req.body,
+      errors: errors.mapped()
+    });
 });
 
 module.exports = router;
