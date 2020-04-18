@@ -4,6 +4,7 @@ const path = require('path');
 const fs = require('fs');
 const appRoot = require('app-root-path');
 const {check, validationResult, matchedData} = require('express-validator');
+const date = require('../handlers/handleDateFormat');
 
 // GET contact form
 router.get('/', (req, res) => {
@@ -26,7 +27,7 @@ router.post('/', [
   const messages = path.join(appRoot.path, 'messages');
 
   if (errors.errors.length === 0) {
-    fs.writeFile(`${messages}/${Date.now()}.txt`, JSON.stringify(req.body), (err) => {
+    fs.writeFile(`${messages}/${date}.txt`, JSON.stringify(req.body), (err) => {
       if(err) console.log(err);
   
       console.log('Mesage saved!');
