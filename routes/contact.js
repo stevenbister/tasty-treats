@@ -11,14 +11,19 @@ router.get('/', (req, res) => {
   res.render('contact', { 
     title: 'Contact',
     data: {},
-    error: {}
+    errors: {}
   });
 });
 
 // POST to contact form
 router.post('/', [
-  // Validate form
-    check('name').isLength({min: 1}).withMessage('Name is required')
+  // Validate form & sanitize the inputs so they're consistent
+    check('name').isLength({min: 1}).withMessage('Name is required').trim(),
+    check('email').isEmail().withMessage('Email needs to be a vaild email address')
+      .bail() // stops vaildators early if previous ones have failed
+      .trim()
+      .normalizeEmail(),
+    check('message').isLength({min: 1}).withMessage('Message is required').trim()
   ], 
   (req, res) => {
     const errors = validationResult(req);
@@ -38,6 +43,9 @@ router.post('/', [
       data: req.body,
       errors: errors.mapped()
     });
+
+    const data = matchedData(req);
+    console.log('Sanitised:', data);
 });
 
 module.exports = router;
