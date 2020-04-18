@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
+const path = require('path');
 const fs = require('fs');
+const appRoot = require('app-root-path');
 const {check, validationResult, matchedData} = require('express-validator');
 
 // GET contact form
@@ -21,12 +23,13 @@ router.post('/', [
 
   // Write to file
   // TODO: Formate date to nice format
-  // TODO: Put files into folder
+  const messages = path.join(appRoot.path, 'messages');
+
   if (errors.errors.length === 0) {
-    fs.writeFile(`${Date.now()}.txt`, JSON.stringify(req.body), (err) => {
+    fs.writeFile(`${messages}/${Date.now()}.txt`, JSON.stringify(req.body), (err) => {
       if(err) console.log(err);
   
-      console.log('Saved!');
+      console.log('Mesage saved!');
     })
   }
 
