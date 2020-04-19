@@ -1,0 +1,41 @@
+.footer {
+  @include flex-row();
+  @include container-padding();
+
+  background: var(--primary);
+
+  h2 {
+    margin-bottom: 1rem;
+  }
+
+  p,
+  li {
+    margin-bottom: 0.5rem;
+  }
+}
+
+.footer__contact,
+.footer__nav {
+  flex: auto;
+
+  > * {
+    color: var(--primary-lighter);
+  }
+}
+
+.footer__contact {
+  a {
+    color: var(--primary-lighter);
+  }
+}
+
+.footer__nav-item-container {
+  height: 100%;
+  list-style-type: none;
+}
+
+.footer__nav-item {
+  @include nav-item(var(--primary-lighter));
+
+  padding: 0;
+}
