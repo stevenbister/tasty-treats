@@ -1,0 +1,280 @@
+:root {
+  --primary: #955e42;
+  --primary-lighter: #f9f3d4;
+  --primary-font: #353b3c;
+  --container: 1200px;
+  --header-font-family: 'Roboto', sans-serif;
+  --body-font-family: 'Open Sans', sans-serif;
+  --gap: 1rem; }
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+  padding: 0;
+  margin: 0; }
+
+html {
+  box-sizing: border-box;
+  font-size: 16px; }
+
+body {
+  font-family: var(--body-font-family);
+  color: var(--primary-font); }
+
+h1 {
+  font-family: var(--header-font-family);
+  font-weight: 500; }
+
+h2 {
+  font-family: var(--header-font-family);
+  font-weight: 500; }
+
+h3 {
+  font-family: var(--header-font-family);
+  font-weight: 500; }
+
+h4 {
+  font-family: var(--header-font-family);
+  font-weight: 500; }
+
+h5 {
+  font-family: var(--header-font-family);
+  font-weight: 500; }
+
+h6 {
+  font-family: var(--header-font-family);
+  font-weight: 500; }
+
+/**
+ * @param {string} $map - Sass map var name
+ * @param {string} $key - key from the map
+ */
+.header {
+  display: flex;
+  flex-flow: row wrap;
+  padding: 1.75rem 2rem;
+  background: var(--primary-lighter); }
+  @media screen and (min-width: 1200px) {
+    .header {
+      padding: 1.75rem 4rem; } }
+
+.header__logo,
+.header__nav {
+  flex: auto; }
+  @media screen and (max-width: 639px) {
+    .header__logo,
+    .header__nav {
+      text-align: center; } }
+
+.header__logo {
+  font-size: 2.5rem; }
+  @media screen and (max-width: 639px) {
+    .header__logo {
+      padding-bottom: 1rem; } }
+  .header__logo > a {
+    color: var(--primary);
+    text-decoration: none; }
+
+.header__nav-item-container {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: flex-end;
+  height: 100%;
+  list-style-type: none; }
+  @media screen and (max-width: 639px) {
+    .header__nav-item-container {
+      justify-content: space-between; } }
+
+.header__nav-item {
+  font-size: 18px;
+  padding-left: 1rem; }
+  .header__nav-item:first-child {
+    padding-left: 0; }
+  .header__nav-item > * {
+    color: var(--primary);
+    text-decoration: none; }
+
+.footer {
+  display: flex;
+  flex-flow: row wrap;
+  padding: 1.75rem 2rem;
+  background: var(--primary); }
+  @media screen and (min-width: 1200px) {
+    .footer {
+      padding: 1.75rem 4rem; } }
+  .footer h2 {
+    margin-bottom: 1rem; }
+  .footer p,
+  .footer li {
+    margin-bottom: 0.5rem; }
+
+.footer__contact,
+.footer__nav {
+  flex: auto; }
+  .footer__contact > *,
+  .footer__nav > * {
+    color: var(--primary-lighter); }
+
+.footer__contact a {
+  color: var(--primary-lighter); }
+
+.footer__nav-item-container {
+  height: 100%;
+  list-style-type: none; }
+
+.footer__nav-item {
+  font-size: 18px;
+  padding-left: 1rem;
+  padding: 0; }
+  .footer__nav-item:first-child {
+    padding-left: 0; }
+  .footer__nav-item > * {
+    color: var(--primary-lighter);
+    text-decoration: none; }
+
+.page__article {
+  display: grid;
+  grid-template-rows: repeat(auto);
+  grid-template-areas: 'header header header' 'main main main' 'footer footer footer';
+  row-gap: var(--gap); }
+
+.page__header {
+  padding: 1.75rem 2rem;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary) center/cover no-repeat;
+  grid-area: header;
+  min-height: 350px;
+  max-height: 30vh;
+  position: relative;
+  text-align: center; }
+  @media screen and (min-width: 1200px) {
+    .page__header {
+      padding: 1.75rem 4rem; } }
+  .page__header::before {
+    content: '';
+    background: rgba(149, 94, 66, 0.1);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%; }
+
+.page__header-title {
+  font-size: 2.25rem;
+  color: #fff;
+  z-index: 1; }
+
+.page__section {
+  grid-area: main;
+  padding: 4rem 0; }
+  @media screen and (max-width: 959px) {
+    .page__section {
+      padding: 1.75rem 2rem; } }
+  @media screen and (max-width: 959px) and (min-width: 1200px) {
+    .page__section {
+      padding: 1.75rem 4rem; } }
+  .page__section > * {
+    max-width: 800px;
+    margin: 0 auto; }
+  .page__section > *:not(:last-child) {
+    margin-bottom: 2rem; }
+
+.form {
+  display: grid;
+  grid-template-areas: 'name' 'email' 'message' 'subscribe' 'button';
+  gap: 2rem; }
+  @media screen and (min-width: 640px) {
+    .form {
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-areas: 'name email' 'message message' 'subscribe subscribe' 'button .'; } }
+
+.form__group {
+  position: relative; }
+
+.form__group--name {
+  grid-area: name; }
+
+.form__group--email {
+  grid-area: email; }
+
+.form__group--message {
+  grid-area: message; }
+
+.form__group--subscribe {
+  grid-area: subscribe; }
+
+.form__group--button {
+  grid-area: button; }
+
+.form__group--subscribe .form__label {
+  display: inline;
+  position: absolute;
+  left: 0; }
+
+.form__group--subscribe .form__label::before {
+  content: '';
+  display: inline-block;
+  height: 1rem;
+  width: 1rem;
+  border: 1px solid var(--primary);
+  margin-right: 0.3rem; }
+
+.form__group--subscribe .form__label::after {
+  content: '';
+  display: inline-block;
+  position: absolute;
+  left: 4px;
+  top: 5px;
+  height: 6px;
+  width: 9px;
+  border-left: 2px solid;
+  border-bottom: 2px solid;
+  transform: rotate(-45deg); }
+
+.form__group--subscribe .form__checkbox {
+  opacity: 0; }
+  .form__group--subscribe .form__checkbox + .form__label::after {
+    content: none; }
+  .form__group--subscribe .form__checkbox:checked + .form__label::after {
+    content: ''; }
+
+.form__label {
+  display: block;
+  padding-bottom: 0.5rem; }
+  .form__label[data-required]::after {
+    content: ' *';
+    color: red; }
+
+.form__input,
+.form__textarea {
+  border: solid 1px #605f5e;
+  padding: 0.3rem 0.5rem;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  min-width: 100%; }
+  .form__input:focus,
+  .form__textarea:focus {
+    border-color: var(--primary); }
+  .form__input--error,
+  .form__textarea--error {
+    border-color: red; }
+
+.form__submit {
+  border: solid 2px var(--primary);
+  background: none;
+  color: var(--primary);
+  font-size: 1rem;
+  line-height: 1.7;
+  padding: 0.3rem 0.75rem;
+  cursor: pointer; }
+  .form__submit:hover, .form__submit:focus {
+    background-color: var(--primary);
+    color: #fff; }
+
+/*# sourceMappingURL=style.css.map */

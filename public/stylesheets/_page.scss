@@ -1,5 +1,6 @@
 .page__article {
   display: grid;
+  grid-template-rows: repeat(auto);
   grid-template-areas:
     'header header header'
     'main main main'
@@ -15,6 +16,7 @@
   min-height: 350px;
   max-height: 30vh;
   position: relative;
+  text-align: center;
 
   &::before {
     $color: #955e42;
@@ -37,6 +39,10 @@
 .page__section {
   grid-area: main;
   padding: 4rem 0;
+
+  @include breakpoint(max, medium) {
+    @include container-padding();
+  }
 
   > * {
     max-width: 800px;

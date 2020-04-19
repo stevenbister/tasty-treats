@@ -1,11 +1,21 @@
 .form {
   display: grid;
   grid-template-areas:
-    'name email'
-    'message message'
-    'subscribe subscribe'
-    'button .';
+    'name'
+    'email'
+    'message'
+    'subscribe'
+    'button';
   gap: 2rem;
+
+  @include breakpoint(min, small) {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas:
+      'name email'
+      'message message'
+      'subscribe subscribe'
+      'button .';
+  }
 }
 
 .form__group {

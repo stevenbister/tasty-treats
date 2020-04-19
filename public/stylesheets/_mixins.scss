@@ -54,6 +54,10 @@ $breakpoints: (
   font-size: 18px;
   padding-left: 1rem;
 
+  &:first-child {
+    padding-left: 0;
+  }
+
   > * {
     color: $colour;
     text-decoration: none;
