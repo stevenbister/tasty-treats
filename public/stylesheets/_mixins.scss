@@ -1,0 +1,32 @@
+@import 'functions';
+
+// Breakpoints
+$breakpoints: (
+  small: 640px,
+  medium: 960px,
+  large: 1200px,
+  xlarge: 1400px,
+);
+
+@mixin breakpoint($range, $breakpoint) {
+  @if $range==min or $range==max or $range==only {
+    @if $range !=only {
+      // Minus 1px if range is set to max
+      @if $range==max {
+        @media screen and (#{$range}-width: map-get($breakpoints, $breakpoint) - 1px) {
+          @content;
+        }
+      } @else {
+        @media screen and (#{$range}-width: map-get($breakpoints, $breakpoint)) {
+          @content;
+        }
+      } // @if $range==max
+    } @else {
+      @media screen and (min-width: map-get($breakpoints, $breakpoint)) and (max-width: map-get-next($breakpoints, $breakpoint) - 1px) {
+        @content;
+      }
+    } // @if $range !=only
+  } @else {
+    @error '$range argument must be either \'min\', \'max\' or \'only\'';
+  } // @if $range==min or $range==max or $range==only
+}

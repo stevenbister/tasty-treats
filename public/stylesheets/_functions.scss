@@ -1,0 +1,40 @@
+/**
+ * @param {string} $map - Sass map var name
+ * @param {string} $key - key from the map
+ */
+
+// Get the next item in the map
+@function map-get-next($map, $key) {
+  // Check if map is valid
+  @if type-of($map) ==map {
+    // Check map has key
+    @if map-has-key($map, $key) {
+      // Create a counter to count each item in map
+      $counter: 0;
+      // Create a counter to set the index of each key in the map
+      $key-index: false;
+
+      // Loop through the map
+      @each $map-key, $map-value in $breakpoints {
+        // Update counter
+        $counter: $counter + 1;
+
+        // Set key index to counter
+        @if $map-key==$key {
+          $key-index: $counter;
+        }
+
+        // If counter is equal to the key index return the value
+        @if $counter==$key-index + 1 {
+          @return $map-value;
+        }
+
+        // If last entry in map return false
+        @if $counter==length($map) {
+          @warn 'No next map item for #{$key}';
+          @return false;
+        }
+      }
+    }
+  }
+}
