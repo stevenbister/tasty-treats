@@ -6,10 +6,19 @@ const appRoot = require('app-root-path');
 const {check, validationResult, matchedData} = require('express-validator');
 const handleDateFormat = require('../handlers/handleDateFormat');
 
+// I would make some kind of function to loop over the /routes folder to dynamically create this
+const nav = {
+  'Home': '/',
+  'Bread': '/',
+  'Cakes': '/',
+  'Contact': '/contact'
+}
+
 // GET contact form
 router.get('/', (req, res) => {
   res.render('contact', { 
     title: 'Contact',
+    nav,
     data: {},
     errors: {}
   });
@@ -35,14 +44,14 @@ router.post('/',
       .trim()
   ],
   (req, res) => {
-    const errors = validationResult(req);
-    
+  const errors = validationResult(req);
     res.render('contact', {
       title: 'Contact',
+      nav,
       data: req.body,
       errors: errors.mapped()
     });
-    
+
     // Sanitise data
     const data = matchedData(req);
     const messagesFilePath = path.join(appRoot.path, 'messages');
@@ -50,10 +59,11 @@ router.post('/',
     if (errors.errors.length === 0) {
       fs.writeFile(`${messagesFilePath}/${handleDateFormat}.txt`, JSON.stringify(data), (err) => {
         if (err) console.log(err);
-    
+
         console.log('Mesage saved!');
       })
     }
+    // TODO: Thank you message
 
 });
 
