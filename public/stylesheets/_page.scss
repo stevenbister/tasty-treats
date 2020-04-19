@@ -1,6 +1,4 @@
 .page__article {
-  --gap: 1rem;
-
   display: grid;
   grid-template-areas:
     'header header header'
@@ -37,6 +35,15 @@
 }
 
 .page__section {
-  @include container-padding();
   grid-area: main;
+  padding: 4rem 0;
+
+  > * {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  > *:not(:last-child) {
+    margin-bottom: 2rem;
+  }
 }
