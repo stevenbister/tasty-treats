@@ -5,10 +5,33 @@
 <section class="page__section">
   <h2>Send us a message</h2>
 
+  {{#if errors}}
+  <ul>
+    {{#each errors}}
+    <li>{{this.msg}}</li>
+    {{/each}}
+  </ul>
+  {{/if}}
+
+  {{!-- {{#if errors}}
+  <ul>
+    {{#if errors.name}}
+    <li>{{errors.name.msg}}</li>
+    {{/if}}
+    {{#if errors.email}}
+    <li>{{errors.email.msg}}</li>
+    {{/if}}
+    {{#if errors.message}}
+    <li>{{errors.message.msg}}</li>
+    {{/if}}
+  </ul>
+  {{/if}} --}}
+
   <form action="/contact" method="post" class="form" novalidate>
     <div class="form__group form__group--name">
       <label for="name" class="form__label" data-required="required">Name</label>
-      <input type="text" name="name" id="name" class="form__input {{#if errors.name }}form__input--error{{/if}}">
+      <input type="text" name="name" id="name" value="{{data.name}}"
+        class="form__input {{#if errors.name }}form__input--error{{/if}}">
       {{#if errors.name }}
       <div>
         {{ errors.name.msg }}
@@ -18,7 +41,8 @@
 
     <div class="form__group form__group--email">
       <label for="email" class="form__label" data-required="required">Email Address</label>
-      <input type="email" name="email" id="email" class="form__input {{#if errors.email }}form__input--error{{/if}}">
+      <input type="email" name="email" id="email" value="{{data.email}}"
+        class="form__input {{#if errors.email }}form__input--error{{/if}}">
       {{#if errors.email }}
       <div>
         {{ errors.email.msg }}
@@ -29,7 +53,7 @@
     <div class="form__group form__group--message">
       <label for="message" class="form__label" data-required="required">Message</label>
       <textarea name="message" id="message" rows="7"
-        class="form__textarea {{#if errors.name }}form__textarea--error{{/if}}"></textarea>
+        class="form__textarea {{#if errors.message }}form__textarea--error{{/if}}">{{data.message}}</textarea>
       {{#if errors.message }}
       <div>
         {{ errors.message.msg }}

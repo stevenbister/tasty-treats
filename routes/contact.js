@@ -47,13 +47,15 @@ router.post('/',
   ],
   (req, res) => {
   const errors = validationResult(req);
-    res.render('contact', {
-      title: 'Contact',
-      nav,
-      image: '../images/theme-photos-Hx7xdwhj2AY-unsplash.jpg',
-      data: req.body,
-      errors: errors.mapped()
-    });
+   if(!errors.isEmpty()) {
+     return res.render('contact', {
+       title: 'Contact',
+       nav,
+       image: '../images/theme-photos-Hx7xdwhj2AY-unsplash.jpg',
+       data: req.body,
+       errors: errors.mapped()
+     });
+   }
 
     // Sanitise data
     const data = matchedData(req);
@@ -65,8 +67,9 @@ router.post('/',
 
         console.log('Mesage saved!');
       })
+
+      res.redirect('/success');
     }
-    // TODO: Thank you message
 
 });
 
