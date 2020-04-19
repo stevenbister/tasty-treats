@@ -30,3 +30,32 @@ $breakpoints: (
     @error '$range argument must be either \'min\', \'max\' or \'only\'';
   } // @if $range==min or $range==max or $range==only
 }
+
+@mixin flex-row($align: '', $justify: '') {
+  display: flex;
+  flex-flow: row wrap;
+  @if $align != '' {
+    align-items: $align;
+  }
+  @if $justify != '' {
+    justify-content: $justify;
+  }
+}
+
+@mixin container-padding() {
+  padding: 1.75rem 2rem;
+
+  @include breakpoint(min, large) {
+    padding: 1.75rem 4rem;
+  }
+}
+
+@mixin nav-item($colour) {
+  font-size: 18px;
+  padding-left: 1rem;
+
+  > * {
+    color: $colour;
+    text-decoration: none;
+  }
+}
