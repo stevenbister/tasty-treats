@@ -1,2 +1,7 @@
-<h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
+<header class="page__header" {{#if image}}style="background-image: url({{image}});" {{/if}}>
+  <h1 class="page__header-title">Welcome to {{title}}</h1>
+</header>
+
+<section class="page__section">
+  <p>Welcome to {{title}}</p>
+</section>
