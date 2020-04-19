@@ -10,7 +10,7 @@
   "dependencies": {
     "app-root-path": "^3.0.0",
     "body-parser": "^1.19.0",
-    "cookie-parser": "~1.4.4",
+    "cookie-parser": "^1.4.5",
     "debug": "~2.6.9",
     "express": "~4.16.1",
     "express-validator": "^6.4.0",
@@ -18,5 +18,8 @@
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1",
     "node-sass-middleware": "0.11.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.3"
   }
 }
