@@ -13,7 +13,8 @@ const nav = {
 router.get('/', function(req, res, next) {
   res.render('index', { 
     title: 'Tasty Treats', 
-    nav 
+    nav,
+    image: '../images/taylor-grote-LqkFX2Km1a0-unsplash.jpg',
   });
 });
 

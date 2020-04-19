@@ -19,10 +19,12 @@ router.get('/', (req, res) => {
   res.render('contact', { 
     title: 'Contact',
     nav,
+    image: '../images/theme-photos-Hx7xdwhj2AY-unsplash.jpg',
     data: {},
     errors: {}
   });
 });
+
 
 // POST to contact form
 router.post('/', 
@@ -48,6 +50,7 @@ router.post('/',
     res.render('contact', {
       title: 'Contact',
       nav,
+      image: '../images/theme-photos-Hx7xdwhj2AY-unsplash.jpg',
       data: req.body,
       errors: errors.mapped()
     });
