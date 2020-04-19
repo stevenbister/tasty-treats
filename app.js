@@ -8,9 +8,13 @@ const sassMiddleware = require('node-sass-middleware');
 // Need to include body parser to expose submitted form values on req.body
 const bodyParser = require('body-parser');
 
+// Add security from http headers
+const helmet = require('helmet');
+
 // Routers
 const indexRouter = require('./routes/index');
 const contactRouter = require('./routes/contact');
+const successRouter = require('./routes/success');
 
 const app = express();
 
@@ -18,10 +22,11 @@ const app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
+app.use(helmet());
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(express.urlencoded({ extended: false }));
 app.use(sassMiddleware({
   src: path.join(__dirname, 'public'),
   dest: path.join(__dirname, 'public'),
@@ -35,6 +40,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/', indexRouter);
 app.use('/contact', contactRouter);
+app.use('/success', successRouter);
 
 
 // catch 404 and forward to error handler
