@@ -8,7 +8,8 @@
   "scripts": {
     "start": "node ./bin/www",
     "devstart": "nodemon ./bin/www",
-    "serverstart": "set DEBUG=tasty-treats:* npm run devstart"
+    "serverstart": "set DEBUG=tasty-treats:* npm run devstart",
+    "herokudeploy": "git push heroku master"
   },
   "dependencies": {
     "app-root-path": "^3.0.0",
