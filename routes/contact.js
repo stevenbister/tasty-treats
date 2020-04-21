@@ -20,6 +20,7 @@ router.get('/', (req, res) => {
     title: 'Contact',
     nav,
     image: '../images/theme-photos-Hx7xdwhj2AY-unsplash.jpg',
+    date: new Date(),
     data: {},
     errors: {}
   });
@@ -57,8 +58,7 @@ router.post('/',
      });
    }
 
-    // Sanitise data
-    const data = matchedData(req);
+    const data = req.body;
     const messagesFilePath = path.join(appRoot.path, 'messages');
 
     // Check if there are errors and write sanitised to file
@@ -76,7 +76,7 @@ router.post('/',
       
         let arrayOfObj = JSON.parse(fileData);
 
-        arrayOfObj.messages.push(data)
+        arrayOfObj.messages.unshift(data)
 
         fs.writeFile(`${messagesFilePath}/messages.json`, JSON.stringify(arrayOfObj), (err) => {
           if (err) return console.log(err);
