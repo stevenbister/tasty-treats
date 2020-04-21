@@ -13,21 +13,9 @@
   </ul>
   {{/if}}
 
-  {{!-- {{#if errors}}
-  <ul>
-    {{#if errors.name}}
-    <li>{{errors.name.msg}}</li>
-    {{/if}}
-    {{#if errors.email}}
-    <li>{{errors.email.msg}}</li>
-    {{/if}}
-    {{#if errors.message}}
-    <li>{{errors.message.msg}}</li>
-    {{/if}}
-  </ul>
-  {{/if}} --}}
-
   <form action="/contact" method="post" class="form" novalidate>
+    <input type="hidden" name="date" value="{{date}}">
+
     <div class="form__group form__group--name">
       <label for="name" class="form__label" data-required="required">Name</label>
       <input type="text" name="name" id="name" value="{{data.name}}"
