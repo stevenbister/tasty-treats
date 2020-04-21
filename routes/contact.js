@@ -60,13 +60,30 @@ router.post('/',
     // Sanitise data
     const data = matchedData(req);
     const messagesFilePath = path.join(appRoot.path, 'messages');
+
     // Check if there are errors and write sanitised to file
     if (errors.errors.length === 0) {
       fs.writeFile(`${messagesFilePath}/${handleDateFormat}.txt`, JSON.stringify(data), (err) => {
-        if (err) console.log(err);
+        if (err) return console.log(err);
 
-        console.log('Mesage saved!');
+        console.log('Mesage saved to server');
       })
+
+      // Save messages to a JSON object to be displayed on front page
+      // Would probably be better save to a database as this isn't the most sustainable method
+      fs.readFile(`${messagesFilePath}/messages.json`, 'utf-8', (err, fileData) => {
+        if (err) return console.log(err);
+      
+        let arrayOfObj = JSON.parse(fileData);
+
+        arrayOfObj.messages.push(data)
+
+        fs.writeFile(`${messagesFilePath}/messages.json`, JSON.stringify(arrayOfObj), (err) => {
+          if (err) return console.log(err);
+
+          console.log('Message saved to json file');
+        });
+      });
 
       res.redirect('/success');
     }
