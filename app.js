@@ -15,6 +15,7 @@ const helmet = require('helmet');
 const indexRouter = require('./routes/index');
 const contactRouter = require('./routes/contact');
 const successRouter = require('./routes/success');
+const messagesRouter = require('./routes/messages');
 
 const app = express();
 
@@ -41,6 +42,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/', indexRouter);
 app.use('/contact', contactRouter);
 app.use('/success', successRouter);
+app.use('/messages', messagesRouter);
 
 
 // catch 404 and forward to error handler
