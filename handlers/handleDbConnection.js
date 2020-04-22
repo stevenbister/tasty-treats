@@ -7,7 +7,7 @@ const connectDB = async (func) => {
   try {
     // Connect to mongodb
     const client = await MongoClient.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017', { useNewUrlParser: true,   useUnifiedTopology: true }).catch(err => console.log(err));
-    const db = client.db('tasty-treats-db');
+    const db = client.db(process.env.MONGODB_DATABASE || 'tasty-treats-db');
 
     // Run function passing the database as the param
     func(db);

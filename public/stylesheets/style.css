@@ -277,4 +277,17 @@ h6 {
     background-color: var(--primary);
     color: #fff; }
 
+.message__meta,
+.message__body,
+.message__subscribe {
+  padding: 0.5rem; }
+
+.message__meta {
+  display: flex;
+  flex-flow: row wrap;
+  background-color: var(--primary-lighter);
+  color: #605f5e; }
+  .message__meta > * {
+    padding-right: 1rem; }
+
 /*# sourceMappingURL=style.css.map */
