@@ -20,18 +20,24 @@ router.get('/', async (req, res) => {
     const client = await MongoClient.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017', { useNewUrlParser: true,   useUnifiedTopology: true });
     const db = client.db('tasty-treats-db');
     const messagesInfo = await db.collection('messages').find({}).toArray();
-    
-  } catch (error) {
+
+    res.render('messages', {
+      title: 'Messages',
+      nav,
+      numberOfMessages: messagesInfo.length,
+      messages: messagesInfo
+    })
+  } 
+  catch (error) {
     console.log(error)
+    // TODO: Display messages most recent first
+      res.render('messages', {
+        title: 'Messages',
+        nav,
+        messages: error
+      })
   }
 
-// TODO: Display messages most recent first
-  res.render('messages', {
-    title: 'Messages',
-    nav,
-    numberOfMessages: messagesInfo.length,
-    messages: messagesInfo
-  })
 
 });
 
