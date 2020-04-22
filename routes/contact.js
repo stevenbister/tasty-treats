@@ -3,8 +3,11 @@ const router = express.Router();
 const path = require('path');
 const fs = require('fs');
 const appRoot = require('app-root-path');
-const {check, validationResult, matchedData} = require('express-validator');
+const { check, validationResult } = require('express-validator');
 const handleDateFormat = require('../handlers/handleDateFormat');
+
+// Connect to mongodb
+const { MongoClient } = require('mongodb');
 
 // I would make some kind of function to loop over the /routes folder to dynamically create this
 const nav = {
@@ -15,7 +18,7 @@ const nav = {
 }
 
 // GET contact form
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
   res.render('contact', { 
     title: 'Contact',
     nav,
@@ -46,7 +49,7 @@ router.post('/',
       .withMessage('Message is required')
       .trim()
   ],
-  (req, res) => {
+  async (req, res) => {
   const errors = validationResult(req);
    if(!errors.isEmpty()) {
      return res.render('contact', {
@@ -59,31 +62,21 @@ router.post('/',
    }
 
     const data = req.body;
+
+    // Connect to mongodb
+    const client = await MongoClient.connect('mongodb://localhost:27017', { useNewUrlParser: true,   useUnifiedTopology: true });
+    const db = client.db('tasty-treats-db');
+    db.collection('messages').insertOne(data);
+
     const messagesFilePath = path.join(appRoot.path, 'messages');
 
-    // Check if there are errors and write sanitised to file
+    // Check if there are errors and write to file
     if (errors.errors.length === 0) {
       fs.writeFile(`${messagesFilePath}/${handleDateFormat}.txt`, JSON.stringify(data), (err) => {
         if (err) return console.log(err);
 
         console.log('Mesage saved to server');
       })
-
-      // Save messages to a JSON object to be displayed on front page
-      // Would probably be better save to a database as this isn't the most sustainable method
-      fs.readFile(`${messagesFilePath}/messages.json`, 'utf-8', (err, fileData) => {
-        if (err) return console.log(err);
-      
-        let arrayOfObj = JSON.parse(fileData);
-
-        arrayOfObj.messages.unshift(data)
-
-        fs.writeFile(`${messagesFilePath}/messages.json`, JSON.stringify(arrayOfObj), (err) => {
-          if (err) return console.log(err);
-
-          console.log('Message saved to json file');
-        });
-      });
 
       res.redirect('/success');
     }
