@@ -7,7 +7,7 @@ const { check, validationResult } = require('express-validator');
 const handleDateFormat = require('../handlers/handleDateFormat');
 
 // Connect to mongodb
-const { MongoClient } = require('mongodb');
+const connectDB = require('../handlers/handleDbConnection');
 
 // I would make some kind of function to loop over the /routes folder to dynamically create this
 const nav = {
@@ -64,9 +64,10 @@ router.post('/',
     const data = req.body;
 
     // Connect to mongodb
-    const client = await MongoClient.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017', { useNewUrlParser: true,   useUnifiedTopology: true });
-    const db = client.db('tasty-treats-db');
-    db.collection('messages').insertOne(data);
+    connectDB(async db => {
+      db.collection('messages').insertOne(data);
+    });
+
 
     const messagesFilePath = path.join(appRoot.path, 'messages');
 
