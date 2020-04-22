@@ -9,6 +9,9 @@ const handleDateFormat = require('../handlers/handleDateFormat');
 // Connect to mongodb
 const connectDB = require('../handlers/handleDbConnection');
 
+// Get the messages folder, we'll save text files here later
+const messagesFilePath = path.join(appRoot.path, 'messages');
+
 // I would make some kind of function to loop over the /routes folder to dynamically create this
 const nav = {
   'Home': '/',
@@ -18,7 +21,7 @@ const nav = {
 }
 
 // GET contact form
-router.get('/', async (req, res) => {
+router.get('/', (req, res) => {
   res.render('contact', { 
     title: 'Contact',
     nav,
@@ -29,47 +32,41 @@ router.get('/', async (req, res) => {
   });
 });
 
-
 // POST to contact form
-router.post('/', 
-  [
+router.post('/', [
   // Validate form & sanitize the inputs so they're consistent
-    check('name')
-      .isLength({min: 1})
-      .withMessage('Name is required')
-      .trim(),
-    check('email')
-      .isEmail()
-      .withMessage('Email needs to be a vaild email address')
-      .bail() // stops vaildators early if previous ones have failed
-      .trim()
-      .normalizeEmail(),
-    check('message')
-      .isLength({min: 1})
-      .withMessage('Message is required')
-      .trim()
-  ],
-  async (req, res) => {
-  const errors = validationResult(req);
+  check('name')
+    .isLength({min: 1})
+    .withMessage('Name is required')
+    .trim(),
+  check('email')
+    .isEmail()
+    .withMessage('Email needs to be a vaild email address')
+    .bail() // stops vaildators early if previous ones have failed
+    .trim()
+    .normalizeEmail(),
+  check('message')
+    .isLength({min: 1})
+    .withMessage('Message is required')
+    .trim()
+  ], (req, res) => {
+    const data = req.body;
+    const errors = validationResult(req);
+
    if(!errors.isEmpty()) {
      return res.render('contact', {
        title: 'Contact',
        nav,
        image: '../images/theme-photos-Hx7xdwhj2AY-unsplash.jpg',
-       data: req.body,
+       data,
        errors: errors.mapped()
      });
    }
 
-    const data = req.body;
-
-    // Connect to mongodb
+    // Push message to database
     connectDB(async db => {
       db.collection('messages').insertOne(data);
     });
-
-
-    const messagesFilePath = path.join(appRoot.path, 'messages');
 
     // Check if there are errors and write to file
     if (errors.errors.length === 0) {
