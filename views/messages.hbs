@@ -3,21 +3,23 @@
 </header>
 
 <section class="page__section">
-  <h2>{{numberOfMessages}} messages submitted</h2>
+  <h2>{{numberOfMessages}} messages</h2>
   {{#each messages}}
-  <div class="message">
-    <div class="message__meta">
-      <p>Name: {{this.name}}</p>
-      <p>Email: {{this.email}}</p>
-      <p>Date: {{this.date}}</p>
-      {{#if this.subscribe}}
-      <p>Signed up to newsletter</p>
-      {{/if}}
-    </div>
-    <div class="message__body">
+  <article class="message">
+    <header class="message__meta">
+      <p><strong>Name:</strong> {{this.name}}</p>
+      <p><strong>Email:</strong> {{this.email}}</p>
+      <p><strong>Date:</strong> {{this.date}}</p>
+    </header>
+    <section class="message__body">
       {{this.message}}
-    </div>
-  </div>
+    </section>
+
+    <footer class="message__subscribe">
+      <p><strong>Subscribed to newsletter:</strong> {{#if this.subscribe}}Yes{{else}}No{{/if}}</p>
+    </footer>
+
+  </article>
   {{/each}}
 
 </section>

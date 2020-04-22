@@ -1,0 +1,15 @@
+.message__meta,
+.message__body,
+.message__subscribe {
+  padding: 0.5rem;
+}
+
+.message__meta {
+  @include flex-row();
+  background-color: var(--primary-lighter);
+  color: #605f5e;
+
+  > * {
+    padding-right: 1rem;
+  }
+}
