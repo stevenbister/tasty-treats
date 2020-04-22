@@ -64,7 +64,7 @@ router.post('/',
     const data = req.body;
 
     // Connect to mongodb
-    const client = await MongoClient.connect('mongodb://localhost:27017', { useNewUrlParser: true,   useUnifiedTopology: true });
+    const client = await MongoClient.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017', { useNewUrlParser: true,   useUnifiedTopology: true });
     const db = client.db('tasty-treats-db');
     db.collection('messages').insertOne(data);
 

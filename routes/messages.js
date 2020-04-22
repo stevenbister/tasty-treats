@@ -16,7 +16,7 @@ const nav = {
 router.get('/', async (req, res) => {
 
   // Connect to mongodb
-  const client = await MongoClient.connect('mongodb://localhost:27017', { useNewUrlParser: true,   useUnifiedTopology: true });
+  const client = await MongoClient.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017', { useNewUrlParser: true,   useUnifiedTopology: true });
   const db = client.db('tasty-treats-db');
 
   const messagesInfo = await db.collection('messages').find({}).toArray();
