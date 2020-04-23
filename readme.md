@@ -21,7 +21,7 @@ Published to Heroku https://tasty-treats-app.herokuapp.com/contact.
 - Validate email addresses and prevent
   - Server side validation using express validator
 - Create a page where Terence can view the inquiries with the newest showing first
-  - Messages are saved to a Mongodb database and displayed here https://tasty-treats-app.herokuapp.com/contact
+  - Messages are saved to a Mongodb database and displayed here https://tasty-treats-app.herokuapp.com/messages
 - Prevent the form being spammed by bots
   - Attempted to implement a reCaptcha, however was unable to get it working correctly before submitting so didn't commit it
 
